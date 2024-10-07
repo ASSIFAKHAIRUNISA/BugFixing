@@ -17,6 +17,11 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        //tambahan untuk bug. menginisialisasi nama, identitas, dan gender
+        val nama = intent.getStringExtra(AppointmentActivity.EXTRA_NAMA)
+        val identitas = intent.getStringExtra(AppointmentActivity.EXTRA_IDENTITAS)
+        val gender = intent.getStringExtra(AppointmentActivity.EXTRA_GENDER)
+
         val tipe = intent.getStringExtra(AppointmentActivity.EXTRA_TIPE)
         val alamat = intent.getStringExtra(AppointmentActivity.EXTRA_ALAMAT)
         val tanggal = intent.getStringExtra(AppointmentActivity.EXTRA_TANGGAL)

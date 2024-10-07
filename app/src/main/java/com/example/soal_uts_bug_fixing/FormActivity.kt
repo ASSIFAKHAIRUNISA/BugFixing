@@ -21,14 +21,15 @@ class FormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        gendersArray = resources.getStringArray()
-        // Gunakan array yang sudah di buat di folder values
+        gendersArray = resources.getStringArray(R.array.gender_descriptions)
+        // perbaikan solusi bug, dengan menambahkan R.array.gender_descriptions
 
 
         with(binding){
             val adapterGenders = ArrayAdapter(this@FormActivity, R.layout.custom_spinner, gendersArray)
             adapterGenders.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            //
+            // tambahan solusi bug
+            genderSpinner.adapter = adapterGenders
 
             genderSpinner.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -45,11 +46,15 @@ class FormActivity : AppCompatActivity() {
             submitBtn.setOnClickListener(){
                 if(fieldNotEmpty()){
                     val intentToAppointment = Intent(this@FormActivity, AppointmentActivity::class.java)
-                    intentToAppointment.putExtra(EXTRA_NAMA, namaEdt.text.toString())
-                    intentToAppointment.putExtra(EXTRA_IDENTITAS, identitasEdt.text.toString())
-                    intentToAppointment.putExtra(EXTRA_GENDER, genderInput)
-                    intentToAppointment.putExtra(EXTRA_KELUHAN, keluhanEdt.text.toString())
-                    //
+
+                    // perbaikan solusi bug
+                    intentToAppointment.putExtra("nama", namaEdt.text.toString())
+                    intentToAppointment.putExtra("identitas", identitasEdt.text.toString())
+                    intentToAppointment.putExtra("gender", genderInput)
+                    intentToAppointment.putExtra("keluhan", keluhanEdt.text.toString())
+
+                    // tambahan solusi bug
+                    startActivity(intent)
                 }else{
                     Toast.makeText(this@FormActivity, "MASIH ADA KOLOM YANG KOSONG", Toast.LENGTH_SHORT).show()
                 }
